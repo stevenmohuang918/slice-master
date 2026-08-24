@@ -1,0 +1,9 @@
+# 本地编辑器与系统文件
+.DS_Store
+Thumbs.db
+
+# 本地测试、缓存与发布产物
+node_modules/
+.wrangler/
+*.zip
+*.log
