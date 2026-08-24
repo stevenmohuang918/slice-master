@@ -2,7 +2,7 @@
 <html lang="zh-CN">
 <head>
   <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <title>切图大师 · UI Asset Extractor</title>
   <style>
     :root{--ink:#14211d;--sub:#66756d;--bg:#f4f6f3;--surface:#fff;--line:#dbe2dd;--green:#07885e;--green-soft:#e3f7ed;--orange:#f9734c;--shadow:0 18px 42px rgba(19,36,29,.08);--radius:18px}*{box-sizing:border-box}html{background:var(--bg)}body{margin:0;color:var(--ink);font:14px/1.5 Inter,"PingFang SC","Microsoft YaHei",Arial,sans-serif}button,input{font:inherit}button{border:0;cursor:pointer}button:focus-visible,input:focus-visible{outline:3px solid rgba(7,136,94,.25);outline-offset:2px}.app{max-width:1420px;margin:0 auto;padding:24px 32px 48px}
@@ -80,6 +80,80 @@
     const text=()=>{const zh=document.documentElement.lang!=='en';fitButton.textContent=viewMode==='page'?(zh?'放大预览':'Zoom preview'):(zh?'完整预览':'Fit full image')};
     function fitPreview(){if(!wrap.classList.contains('active')||!source.width||!source.height)return;const availableWidth=Math.max(1,wrap.clientWidth-40),availableHeight=Math.max(1,wrap.clientHeight-58);let scale=Math.min(1,availableWidth/source.width);if(viewMode==='page')scale=Math.min(scale,availableHeight/source.height);const width=Math.max(1,Math.floor(source.width*scale)),height=Math.max(1,Math.floor(source.height*scale));stack.style.width=width+'px';stack.style.height=height+'px';source.style.width=width+'px';source.style.height=height+'px';layer.style.inset='0 auto auto 0';layer.style.width=source.width+'px';layer.style.height=source.height+'px';layer.style.transformOrigin='top left';layer.style.transform=`scale(${scale})`;text()}
     fitButton.onclick=()=>{manualViewMode=true;viewMode=viewMode==='page'?'width':'page';fitPreview()};window.addEventListener('resize',()=>{if(!manualViewMode)viewMode=window.innerWidth<=920?'page':'width';fitPreview()});new ResizeObserver(fitPreview).observe(wrap);new MutationObserver(()=>requestAnimationFrame(fitPreview)).observe(layer,{childList:true});new MutationObserver(text).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});requestAnimationFrame(fitPreview);
+  })();
+  </script>
+  <style>
+    /* Mobile review mode: one coherent rule set, intentionally loaded after legacy responsive rules. */
+    .card{touch-action:manipulation}
+    .card:focus-visible{outline:3px solid rgba(7,136,94,.28);outline-offset:2px}
+    @media (max-width:767px){
+      body{padding-bottom:env(safe-area-inset-bottom)}
+      .app{padding:calc(14px + env(safe-area-inset-top)) 14px calc(28px + env(safe-area-inset-bottom))}
+      .topbar{height:44px}
+      .language{min-height:40px;padding:3px}
+      .language button{min-width:48px;min-height:32px;font-size:13px}
+      .intro{padding:26px 2px 20px;gap:13px}
+      .intro h1{font-size:clamp(36px,11vw,47px);line-height:1.08;letter-spacing:-.06em}
+      .intro-copy{font-size:15px;line-height:1.65}
+      .steps{margin-top:20px;gap:7px}
+      .stage{min-height:min(620px,74svh);border-radius:16px}
+      .stage-head{height:54px;padding:0 15px}
+      .dropzone,.canvas-wrap{inset:55px 0 0}
+      .canvas-wrap{padding:12px}
+      .drop-inner{padding:30px 16px}
+      .toolbar{left:10px;right:10px;bottom:10px;display:none;grid-template-columns:minmax(0,1fr) auto;gap:8px;padding:9px 10px 10px;border-radius:13px}
+      .toolbar.active{display:grid}
+      .file-name{grid-column:1/-1;min-height:20px;padding:1px 2px;font-size:12px;line-height:18px}
+      .toolbar .quiet{min-height:42px;padding:9px 12px;border-radius:9px;font-size:13px}
+      .toolbar .quiet:first-of-type{margin-right:0!important}
+      .inspector{margin-top:16px;padding:16px;border-radius:16px}
+      .panel-head{padding-bottom:13px}
+      .panel-head h2{font-size:18px}
+      .panel-head p{font-size:13px;line-height:1.45}
+      .count{padding:6px 10px;font-size:13px}
+      .controls{padding:14px 0}
+      .control label,.control output{font-size:13px}
+      input[type=range]{min-height:32px}
+      .selection-bar{padding:13px 0 7px;font-size:13px}
+      .select-all{min-height:36px;padding:4px 0;gap:9px}
+      .select-all input{width:20px;height:20px}
+      .inspector .cards{grid-template-columns:repeat(2,minmax(0,1fr));gap:10px;max-height:min(54svh,490px);min-height:142px;overflow-y:auto;overscroll-behavior:contain;padding:8px 1px 17px;scrollbar-gutter:stable;scroll-snap-type:y proximity}
+      .inspector .card{min-height:148px;border-radius:12px;scroll-snap-align:start;-webkit-tap-highlight-color:transparent}
+      .inspector .card:active{transform:scale(.98)}
+      .inspector .thumb{height:116px;min-height:116px;padding:12px;background-size:14px 14px;background-position:0 0,0 7px,7px -7px,-7px 0}
+      .inspector .thumb img{width:100%;height:100%;max-width:100%;max-height:100%;object-fit:contain;image-rendering:auto}
+      .inspector .card-meta{min-height:32px;padding:8px 9px;font-size:10px;align-items:center}
+      .check{width:24px;height:24px;top:8px;right:8px}
+      .check svg{width:14px}
+      .slice-download-one{left:8px;top:8px;width:32px;height:32px;border-radius:9px}
+      .slice-download-one svg{width:16px;height:16px}
+      .actions{position:sticky;bottom:calc(-16px - env(safe-area-inset-bottom));z-index:4;grid-template-columns:1fr 1.15fr;gap:9px;padding:13px 0 calc(13px + env(safe-area-inset-bottom));background:linear-gradient(to bottom,rgba(255,255,255,0),#fff 18px,#fff 100%)}
+      .secondary,.export{min-height:48px;padding:11px 8px;border-radius:11px;font-size:13px}
+      .footer-note{margin:3px 1px 0;font-size:11px}
+      .app.has-image .intro{padding:13px 2px 14px}
+      .app.has-image .intro h1,.app.has-image .intro-copy,.app.has-image .steps{display:none}
+      .app.has-image .intro:after{content:'已进入切片复核，可点击图块切换选择。';color:var(--sub);font-size:13px;font-weight:600}
+      html[lang=en] .app.has-image .intro:after{content:'Review slices below. Tap a tile to include or exclude it.'}
+    }
+    @media (max-width:374px){
+      .inspector .thumb{height:104px;min-height:104px;padding:9px}
+      .inspector .card{min-height:136px}
+      .toolbar .quiet{padding:8px 9px;font-size:12px}
+    }
+    @media (pointer:coarse){
+      .primary,.quiet,.secondary,.export{min-height:44px}
+    }
+    @media (prefers-reduced-motion:reduce){
+      *,*::before,*::after{scroll-behavior:auto!important;transition-duration:.01ms!important;animation-duration:.01ms!important}
+    }
+  </style>
+  <script>
+  /* Keep the mobile page focused on the actual job after an image is loaded. */
+  (()=>{
+    const app=document.querySelector('.app'),wrap=document.querySelector('#canvasWrap');
+    const sync=()=>app.classList.toggle('has-image',wrap.classList.contains('active'));
+    new MutationObserver(sync).observe(wrap,{attributes:true,attributeFilter:['class']});
+    sync();
   })();
   </script>
 </body>
