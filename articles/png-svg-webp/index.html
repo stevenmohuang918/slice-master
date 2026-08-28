@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <title>PNG、SVG 与 WebP：前端图标资源如何选择？｜切图大师</title>
+  <meta name="description" content="了解 PNG、SVG 与 WebP 的适用场景，帮助设计师和开发者为 UI 图标与插图选择正确的资源格式。">
+  <meta name="robots" content="index,follow,max-image-preview:large"><meta name="theme-color" content="#14211d"><link rel="canonical" href="https://www.slicemaster.com.cn/articles/png-svg-webp/"><link rel="icon" type="image/svg+xml" href="/favicon.svg?v=2"><link rel="stylesheet" href="/articles/styles.css">
+  <meta property="og:type" content="article"><meta property="og:site_name" content="切图大师 · Slice Master"><meta property="og:title" content="PNG、SVG 与 WebP：前端图标资源如何选择？"><meta property="og:description" content="从图形特点与开发场景出发，选择正确的 UI 资源格式。"><meta property="og:url" content="https://www.slicemaster.com.cn/articles/png-svg-webp/"><meta property="article:published_time" content="2026-08-26">
+  <script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","headline":"PNG、SVG 与 WebP：前端图标资源如何选择？","description":"了解 PNG、SVG 与 WebP 的适用场景，帮助设计师和开发者为 UI 图标与插图选择正确的资源格式。","datePublished":"2026-08-26","dateModified":"2026-08-26","inLanguage":"zh-CN","mainEntityOfPage":"https://www.slicemaster.com.cn/articles/png-svg-webp/","publisher":{"@type":"Organization","name":"切图大师"}}</script>
+</head>
+<body><main class="page">
+  <header class="topbar"><a class="brand" href="/"><span class="logo" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M8 3H5a2 2 0 0 0-2 2v3M16 3h3a2 2 0 0 1 2 2v3M21 16v3a2 2 0 0 1-2 2h-3M3 16v3a2 2 0 0 0 2 2h3"/><rect x="8" y="8" width="8" height="8" rx="1"/></svg></span>切图大师</a><a class="back" href="/articles/">← 全部文章</a></header>
+  <article class="article"><div class="meta"><span>资源规范</span><span class="dot"></span><time datetime="2026-08-26">2026.08.26</time><span class="dot"></span><span>4 分钟阅读</span></div><h1>PNG、SVG 与 WebP：前端图标资源如何选择？</h1><p class="lead">格式没有绝对的优劣。关键是看图形是否需要无限缩放、是否需要代码改色、是否包含复杂细节，以及它会在什么设备和页面中使用。</p><hr class="rule"><div class="content">
+    <h2>SVG：适合可控的矢量图标</h2><p>SVG 最适合简单线性图标、单色图形和需要随界面缩放的标识。它可以被 CSS 改色、配合动效，也能在不同分辨率下保持清晰。前提是源文件本身是规范的矢量路径，而不是把位图嵌入 SVG 容器。</p>
+    <h2>PNG：适合固定视觉与透明细节</h2><p>PNG 适合带透明背景的复杂图标、插图、纹理和带细节的 UI 资产。切图大师导出的就是透明 PNG：它不依赖运行环境，开发可以直接作为图片资源引用。对于不需要动态改色、尺寸相对固定的视觉资产，PNG 是稳妥的交付格式。</p>
+    <h2>WebP：适合内容图片与体积优化</h2><p>WebP 常用于图片内容、封面、海报或需要压缩体积的插画。它通常比 PNG 或 JPG 更省流量，但并不天然替代 SVG；对于需要透明边缘且对视觉损失敏感的小图标，也要实际比较效果再决定。</p><div class="note"><strong>快速选择</strong><p>可缩放、可改色的简单图标优先 SVG；固定外观的透明图标和插图优先 PNG；大尺寸内容图片和营销视觉可优先评估 WebP。</p></div>
+    <h2>为什么切图后通常导出 PNG？</h2><p>从一张扁平的设计截图中提取元素，本质上是在处理像素信息。即使原设计中的图标可能来源于 SVG，截图中的它已经是位图。此时导出干净的透明 PNG，能保证视觉还原；如果项目需要 SVG，应回到原始设计源文件或图标库中取得矢量资源。</p>
+    <h2>交付给开发时再补充两件事</h2><ol><li><strong>命名与分组：</strong>例如 <code>nav-home-active.png</code>、<code>nav-home-default.png</code>，让状态关系可读。</li><li><strong>使用尺寸：</strong>文件画布尺寸与页面展示尺寸可以不同；说明预期的 CSS 尺寸，有助于避免模糊或不必要的拉伸。</li></ol>
+    <div class="cta"><div><h2>导出透明 PNG 资源</h2><p>从 UI 截图中筛出开发真正需要的图标与插图。</p></div><a href="/">打开切图大师 →</a></div>
+  </div></article><footer class="footer">切图大师 · UI 资产提取工具</footer>
+</main><script type="module" src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "0ecc2d96ddf94bfcadf8efe1738b34bf"}'></script></body></html>
