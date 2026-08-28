@@ -64,7 +64,7 @@
       <button class="support-action support-trigger" type="button" aria-haspopup="dialog" aria-controls="supportDialog" aria-label="支持切图大师 / Support Slice Master"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M12 20s-7-4.5-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.5-7 10-7 10Z"/></svg><span class="local-zh">微信赞赏</span><span class="local-en">Support on WeChat</span></button>
     </section>
   </main>
-  <dialog class="support-dialog" id="supportDialog" aria-labelledby="supportDialogTitle">
+  <dialog class="support-dialog" id="supportDialog" aria-label="支持切图大师">
     <button class="support-close" id="supportClose" type="button" aria-label="关闭赞赏二维码 / Close support QR code"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
     <div class="support-dialog-copy local-zh" lang="zh-CN"><span class="support-kicker">THANK YOU</span><h2 id="supportDialogTitle">支持切图大师</h2><p>使用微信扫一扫，感谢你的鼓励与支持。</p></div>
     <div class="support-dialog-copy local-en" lang="en"><span class="support-kicker">THANK YOU</span><h2>Support Slice Master</h2><p>Scan with WeChat. Thank you for helping us keep building.</p></div>
@@ -249,12 +249,15 @@
     const dialog=document.querySelector('#supportDialog'),close=document.querySelector('#supportClose'),triggers=document.querySelectorAll('.support-trigger');
     if(!dialog||!close||!triggers.length)return;
     let lastTrigger=null;
+    const syncDialogLabel=()=>dialog.setAttribute('aria-label',document.documentElement.lang==='en'?'Support Slice Master':'支持切图大师');
     const open=trigger=>{lastTrigger=trigger;if(typeof dialog.showModal==='function')dialog.showModal();else dialog.setAttribute('open','')};
     const dismiss=()=>{if(typeof dialog.close==='function')dialog.close();else dialog.removeAttribute('open')};
     triggers.forEach(trigger=>trigger.addEventListener('click',()=>open(trigger)));
     close.addEventListener('click',dismiss);
     dialog.addEventListener('click',event=>{if(event.target===dialog)dismiss()});
     dialog.addEventListener('close',()=>lastTrigger?.focus());
+    new MutationObserver(syncDialogLabel).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+    syncDialogLabel();
   })();
   </script>
   <!-- Cloudflare Web Analytics -->
