@@ -71,6 +71,17 @@
         <article class="journal-card"><a href="/articles/png-svg-webp/"><span class="journal-type"><span class="local-zh">资源规范</span><span class="local-en">Assets</span></span><h3><span class="local-zh">PNG、SVG 与 WebP：前端图标资源如何选择？</span><span class="local-en">PNG, SVG, or WebP: which asset format?</span></h3><p><span class="local-zh">按图形特性、适配方式与开发场景选择正确的资源格式。</span><span class="local-en">Choose the right format for each visual and implementation scenario.</span></p><time datetime="2026-08-26">2026.08.26</time></a></article>
       </div>
     </section>
+    <section class="site-actions" aria-labelledby="siteActionsTitle">
+      <div class="site-actions-copy">
+        <span class="site-actions-kicker">KEEP SLICE MASTER HANDY</span>
+        <h2 id="siteActionsTitle"><span class="local-zh">收藏或分享给需要的人</span><span class="local-en">Save it or share it with your team</span></h2>
+        <p><span class="local-zh">将切图大师留在常用入口，或分享给正在整理设计交付的同事。</span><span class="local-en">Keep Slice Master close by, or pass it to a teammate preparing a design handoff.</span></p>
+      </div>
+      <div class="site-actions-buttons">
+        <button class="site-action" id="bookmarkTrigger" type="button" aria-haspopup="dialog" aria-controls="bookmarkDialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><path d="M6 4.75A1.75 1.75 0 0 1 7.75 3h8.5A1.75 1.75 0 0 1 18 4.75V21l-6-3.7L6 21V4.75Z"/></svg><span class="local-zh">收藏本站</span><span class="local-en">Save site</span></button>
+        <button class="site-action site-action-primary" id="shareTrigger" type="button" aria-haspopup="dialog" aria-controls="shareDialog"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" aria-hidden="true"><circle cx="18" cy="5" r="2.5"/><circle cx="6" cy="12" r="2.5"/><circle cx="18" cy="19" r="2.5"/><path d="m8.2 10.8 7.6-4.5M8.2 13.2l7.6 4.5"/></svg><span class="local-zh">分享网站</span><span class="local-en">Share site</span></button>
+      </div>
+    </section>
     <section class="support" aria-labelledby="support-title">
       <div class="support-copy local-zh" lang="zh-CN"><span class="support-kicker">SUPPORT SLICE MASTER</span><h2 id="support-title">觉得有帮助？支持切图大师持续成长。</h2><p>赞赏将用于切图大师的维护与功能优化。完全自愿，不影响全部功能使用。</p></div>
       <div class="support-copy local-en" lang="en"><span class="support-kicker">SUPPORT SLICE MASTER</span><h2>Enjoying Slice Master? Help us keep improving.</h2><p>Your support helps maintain and improve Slice Master. It is completely optional and never affects access to features.</p></div>
@@ -82,6 +93,18 @@
     <div class="support-dialog-copy local-zh" lang="zh-CN"><span class="support-kicker">THANK YOU</span><h2 id="supportDialogTitle">支持切图大师</h2><p>使用微信扫一扫，感谢你的鼓励与支持。</p></div>
     <div class="support-dialog-copy local-en" lang="en"><span class="support-kicker">THANK YOU</span><h2>Support Slice Master</h2><p>Scan with WeChat. Thank you for helping us keep building.</p></div>
     <figure class="support-qr"><img src="assets/support-wechat.png" alt="微信赞赏二维码 / WeChat appreciation QR code" width="576" height="622"><figcaption><span class="local-zh">微信赞赏 · 完全自愿</span><span class="local-en">WeChat appreciation · Optional</span></figcaption></figure>
+  </dialog>
+  <dialog class="quick-dialog" id="bookmarkDialog" aria-label="收藏本站">
+    <button class="quick-dialog-close" type="button" data-dialog-close="bookmarkDialog" aria-label="关闭收藏说明 / Close save instructions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="local-zh" lang="zh-CN"><span class="support-kicker">SAVE SLICE MASTER</span><h2 id="bookmarkDialogTitle">收藏本站</h2><p>网页无法替你自动收藏，请使用浏览器自带功能：</p><ul><li><strong>电脑：</strong>按 <kbd>Ctrl</kbd> + <kbd>D</kbd>；Mac 请按 <kbd>⌘</kbd> + <kbd>D</kbd>。</li><li><strong>手机：</strong>打开浏览器菜单，选择“添加到主屏幕”或“加入书签”。</li></ul></div>
+    <div class="local-en" lang="en"><span class="support-kicker">SAVE SLICE MASTER</span><h2>Save this site</h2><p>A website cannot save itself to your bookmarks. Use your browser instead:</p><ul><li><strong>Desktop:</strong> press <kbd>Ctrl</kbd> + <kbd>D</kbd>, or <kbd>⌘</kbd> + <kbd>D</kbd> on Mac.</li><li><strong>Mobile:</strong> open your browser menu and choose “Add to Home Screen” or “Bookmark”.</li></ul></div>
+  </dialog>
+  <dialog class="quick-dialog" id="shareDialog" aria-label="分享网站">
+    <button class="quick-dialog-close" type="button" data-dialog-close="shareDialog" aria-label="关闭分享说明 / Close sharing instructions"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="m6 6 12 12M18 6 6 18"/></svg></button>
+    <div class="local-zh" lang="zh-CN"><span class="support-kicker">SHARE SLICE MASTER</span><h2 id="shareDialogTitle">分享网站</h2><p>将切图大师分享给需要提取 UI 图标和插图的伙伴。</p></div>
+    <div class="local-en" lang="en"><span class="support-kicker">SHARE SLICE MASTER</span><h2>Share Slice Master</h2><p>Send Slice Master to anyone who needs to extract UI icons and illustrations.</p></div>
+    <div class="quick-dialog-actions"><button class="site-action site-action-primary" id="shareNow" type="button"><span class="local-zh">打开分享面板</span><span class="local-en">Open share sheet</span></button><button class="site-action" id="copySiteLink" type="button"><span class="local-zh">复制网站链接</span><span class="local-en">Copy site link</span></button></div>
+    <p class="quick-status" id="shareStatus" role="status" aria-live="polite"></p>
   </dialog>
   <script>
   (()=>{
@@ -257,6 +280,7 @@
     .support{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:center;margin-top:18px;padding:22px 25px;border:1px solid #d6e9df;border-radius:var(--radius);background:linear-gradient(120deg,#f8fdf9 0%,#eef9f2 100%);box-shadow:0 12px 28px rgba(19,36,29,.05)}.support-kicker{display:block;color:var(--green);font-size:10px;font-weight:800;letter-spacing:.12em}.support h2{margin:6px 0 0;font-size:20px;letter-spacing:-.04em}.support p{max-width:620px;margin:5px 0 0;color:var(--sub);font-size:13px;line-height:1.6}.support-action{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:42px;padding:10px 14px;border-radius:10px;background:var(--ink);color:#fff;font-size:13px;font-weight:800;white-space:nowrap;transition:transform .16s ease-out,background .16s ease-out}.support-action:hover{background:#263a32}.support-action:active{transform:scale(.96)}.support-action svg{width:17px;height:17px}.support-dialog{width:min(372px,calc(100% - 28px));max-height:calc(100dvh - 28px);padding:28px;border:0;border-radius:20px;background:#fff;color:var(--ink);box-shadow:0 24px 70px rgba(10,25,17,.28)}.support-dialog::backdrop{background:rgba(13,27,20,.54);backdrop-filter:blur(4px)}.support-dialog-copy{text-align:center}.support-dialog h2{margin:6px 0 0;font-size:24px;letter-spacing:-.05em}.support-dialog p{margin:6px 0 0;color:var(--sub);font-size:13px;line-height:1.55}.support-close{position:absolute;top:12px;right:12px;width:34px;height:34px;padding:0;border-radius:9px;background:#f2f5f3;color:var(--sub);display:grid;place-items:center;transition:transform .16s ease-out,background .16s ease-out,color .16s ease-out}.support-close:hover{background:var(--green-soft);color:var(--green)}.support-close:active{transform:scale(.96)}.support-close svg{width:17px;height:17px}.support-qr{margin:19px 0 0;text-align:center}.support-qr img{display:block;width:min(248px,100%);height:auto;margin:0 auto;border-radius:13px;outline:1px solid oklch(0 0 0 / .1);box-shadow:0 10px 22px rgba(20,33,29,.1)}.support-qr figcaption{margin-top:10px;color:var(--sub);font-size:12px;font-weight:700}.support-dialog[open]{animation:support-enter .18s ease-out}@keyframes support-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
     @media(max-width:620px){.support{grid-template-columns:1fr;gap:16px;padding:20px 18px}.support h2{font-size:19px}.support p{font-size:13px}.support-action{width:100%;min-height:46px}.support-dialog{padding:26px 20px;border-radius:18px}.support-qr img{width:min(258px,100%)}}
     @media(prefers-reduced-motion:reduce){.support-dialog[open]{animation:none}}
+    .site-actions{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:22px;align-items:center;margin-top:18px;padding:20px 25px;border:1px solid var(--line);border-radius:var(--radius);background:var(--surface);box-shadow:0 12px 28px rgba(19,36,29,.04)}.site-actions-kicker{display:block;color:var(--green);font-size:10px;font-weight:800;letter-spacing:.12em}.site-actions h2{margin:6px 0 0;font-size:20px;letter-spacing:-.04em}.site-actions p{max-width:620px;margin:5px 0 0;color:var(--sub);font-size:13px;line-height:1.6}.site-actions-buttons{display:flex;flex-wrap:wrap;justify-content:flex-end;gap:9px}.site-action{display:inline-flex;align-items:center;justify-content:center;gap:7px;min-height:42px;padding:10px 13px;border:1px solid #b7d6c7;border-radius:10px;background:#fff;color:var(--green);font-size:13px;font-weight:800;white-space:nowrap;transition:transform .16s ease-out,background .16s ease-out,border-color .16s ease-out,color .16s ease-out}.site-action svg{width:17px;height:17px}.site-action-primary{border-color:var(--ink);background:var(--ink);color:#fff}.quick-dialog{width:min(420px,calc(100% - 28px));max-height:calc(100dvh - 28px);padding:28px;border:0;border-radius:20px;background:#fff;color:var(--ink);box-shadow:0 24px 70px rgba(10,25,17,.28);overscroll-behavior:contain}.quick-dialog::backdrop{background:rgba(13,27,20,.54);backdrop-filter:blur(4px)}.quick-dialog h2{margin:6px 0 0;font-size:24px;letter-spacing:-.05em}.quick-dialog p{margin:8px 0 0;color:var(--sub);font-size:13px;line-height:1.65}.quick-dialog ul{display:grid;gap:9px;margin:18px 0 0;padding:0;list-style:none}.quick-dialog li{padding:10px 11px;border:1px solid #dbe8e0;border-radius:10px;background:#f8fbf9;color:var(--sub);font-size:13px;line-height:1.6}.quick-dialog li strong{color:var(--ink)}.quick-dialog kbd{display:inline-block;min-width:20px;padding:1px 5px;border:1px solid #cbd7d0;border-bottom-width:2px;border-radius:5px;background:#fff;color:var(--ink);font:700 11px/1.45 inherit;text-align:center}.quick-dialog-close{position:absolute;top:12px;right:12px;width:38px;height:38px;padding:0;border-radius:9px;background:#f2f5f3;color:var(--sub);display:grid;place-items:center;transition:transform .16s ease-out,background .16s ease-out,color .16s ease-out}.quick-dialog-close svg{width:17px;height:17px}.quick-dialog-actions{display:grid;grid-template-columns:1fr 1fr;gap:9px;margin-top:20px}.quick-dialog-actions .site-action{width:100%}.quick-status{min-height:22px;margin-top:12px!important;color:var(--green)!important;font-size:12px!important;font-weight:700}.quick-dialog[open]{animation:quick-dialog-enter .18s ease-out}@keyframes quick-dialog-enter{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}@media(hover:hover){.site-action:hover{border-color:var(--green);background:var(--green-soft);color:var(--green)}.site-action-primary:hover{border-color:#263a32;background:#263a32;color:#fff}.quick-dialog-close:hover{background:var(--green-soft);color:var(--green)}}.site-action:active,.quick-dialog-close:active{transform:scale(.96)}@media(max-width:620px){.site-actions{grid-template-columns:1fr;gap:16px;padding:20px 18px}.site-actions h2{font-size:19px}.site-actions-buttons{display:grid;grid-template-columns:1fr 1fr;justify-content:stretch}.site-action{width:100%;min-height:46px;padding:10px 8px;font-size:12px}.quick-dialog{padding:26px 20px;border-radius:18px}.quick-dialog-actions{grid-template-columns:1fr}.quick-dialog-actions .site-action{font-size:13px}}@media(prefers-reduced-motion:reduce){.quick-dialog[open]{animation:none}.site-action,.quick-dialog-close{transition:none}}
   </style>
   <script>
   (()=>{
@@ -272,6 +296,42 @@
     dialog.addEventListener('close',()=>lastTrigger?.focus());
     new MutationObserver(syncDialogLabel).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
     syncDialogLabel();
+  })();
+  </script>
+  <script>
+  /* Static save/share helpers: they guide browser-native actions without claiming to bookmark on the visitor's behalf. */
+  (()=>{
+    const lang=()=>document.documentElement.lang==='en'?'en':'zh';
+    const copyButton=document.querySelector('#copySiteLink'),shareButton=document.querySelector('#shareNow'),shareStatus=document.querySelector('#shareStatus');
+    const dialogs=[
+      {dialog:document.querySelector('#bookmarkDialog'),trigger:document.querySelector('#bookmarkTrigger'),label:{zh:'收藏本站',en:'Save this site'}},
+      {dialog:document.querySelector('#shareDialog'),trigger:document.querySelector('#shareTrigger'),label:{zh:'分享网站',en:'Share site'}}
+    ].filter(item=>item.dialog&&item.trigger);
+    const message=(key)=>({zh:{shareReady:'已打开系统分享面板。',shareCancelled:'已取消分享；你也可以复制链接后发送。',shareUnavailable:'当前浏览器不支持系统分享，请复制链接后发送。',copyDone:'网站链接已复制，可以直接发送给朋友。',copyFailed:'未能自动复制，请从地址栏复制当前网址。'},en:{shareReady:'The system share sheet has opened.',shareCancelled:'Sharing was cancelled. You can copy the link instead.',shareUnavailable:'System sharing is unavailable here. Copy the link to send it instead.',copyDone:'Site link copied. You can now send it to your team.',copyFailed:'Could not copy automatically. Please copy the current URL from your address bar.'}}[lang()][key]);
+    const announce=value=>{if(shareStatus)shareStatus.textContent=value};
+    const updateLabels=()=>{dialogs.forEach(item=>item.dialog.setAttribute('aria-label',item.label[lang()]));if(shareButton)shareButton.hidden=!('share' in navigator)};
+    const restoreFocus=item=>{const target=item.trigger;requestAnimationFrame(()=>target?.focus())};
+    const close=item=>{if(typeof item.dialog.close==='function')item.dialog.close();else{item.dialog.removeAttribute('open');restoreFocus(item)}};
+    const open=item=>{if(item.dialog.open)return;if(item.dialog.id==='shareDialog')announce('share' in navigator?'':message('shareUnavailable'));if(typeof item.dialog.showModal==='function')item.dialog.showModal();else item.dialog.setAttribute('open','');requestAnimationFrame(()=>item.dialog.querySelector('[data-dialog-close]')?.focus())};
+    dialogs.forEach(item=>{
+      item.trigger.addEventListener('click',()=>open(item));
+      item.dialog.querySelectorAll('[data-dialog-close]').forEach(button=>button.addEventListener('click',()=>close(item)));
+      item.dialog.addEventListener('click',event=>{if(event.target===item.dialog)close(item)});
+      item.dialog.addEventListener('close',()=>restoreFocus(item));
+      item.dialog.addEventListener('cancel',()=>{});
+    });
+    document.addEventListener('keydown',event=>{if(event.key!=='Escape')return;dialogs.forEach(item=>{if(item.dialog.hasAttribute('open')&&typeof item.dialog.close!=='function'){event.preventDefault();close(item)}})});
+    async function copyLink(){
+      const url=window.location.href;
+      try{if(navigator.clipboard?.writeText)await navigator.clipboard.writeText(url);else{const field=document.createElement('textarea');field.value=url;field.setAttribute('readonly','');field.style.cssText='position:fixed;opacity:0;pointer-events:none';document.body.append(field);field.select();const copied=document.execCommand('copy');field.remove();if(!copied)throw new Error('copy failed')}announce(message('copyDone'))}catch{announce(message('copyFailed'))}
+    }
+    copyButton?.addEventListener('click',copyLink);
+    shareButton?.addEventListener('click',async()=>{
+      if(!navigator.share){announce(message('shareUnavailable'));copyButton?.focus();return}
+      try{await navigator.share({title:document.title,text:lang()==='zh'?'切图大师：浏览器本地 UI 图标与插图切图工具。':'Slice Master: a local-first UI icon and illustration slicer.',url:window.location.href});announce(message('shareReady'))}catch(error){announce(error?.name==='AbortError'?message('shareCancelled'):message('shareUnavailable'))}
+    });
+    new MutationObserver(updateLabels).observe(document.documentElement,{attributes:true,attributeFilter:['lang']});
+    updateLabels();
   })();
   </script>
   <!-- Cloudflare Web Analytics -->
