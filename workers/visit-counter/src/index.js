@@ -32,6 +32,7 @@ function json(request, body, status = 200) {
 export class VisitCounter extends DurableObject {
   constructor(ctx, env) {
     super(ctx, env);
+    this.env = env;
     this.ctx.storage.sql.exec(
       "CREATE TABLE IF NOT EXISTS counters (name TEXT PRIMARY KEY, total INTEGER NOT NULL)"
     );
@@ -52,6 +53,15 @@ export class VisitCounter extends DurableObject {
   }
 }
 
+// A separate namespace starts the public total from the audited Web Analytics baseline.
+// Keeping the original class preserves the previous counter data for auditability.
+export class VisitCounterV2 extends VisitCounter {
+  total() {
+    const baseline = Number.parseInt(this.env.HISTORICAL_BASELINE ?? "0", 10);
+    return super.total() + (Number.isFinite(baseline) ? baseline : 0);
+  }
+}
+
 export default {
   async fetch(request, env) {
     const cors = corsHeaders(request);
@@ -65,7 +75,7 @@ export default {
 
     if (!cors) return new Response("Forbidden", { status: 403 });
 
-    const counter = env.VISIT_COUNTER.getByName("slice-master-site");
+    const counter = env.VISIT_COUNTER_V2.getByName("slice-master-site");
 
     if (request.method === "POST" && url.pathname === "/v1/visit") {
       return json(request, { total: await counter.recordVisit() });

@@ -4,16 +4,27 @@
   "main": "src/index.js",
   "compatibility_date": "2026-09-03",
   "workers_dev": true,
+  "vars": {
+    "HISTORICAL_BASELINE": "220"
+  },
   "durable_objects": {
     "bindings": [
       {
         "name": "VISIT_COUNTER",
         "class_name": "VisitCounter"
+      },
+      {
+        "name": "VISIT_COUNTER_V2",
+        "class_name": "VisitCounterV2"
       }
     ]
   },
   "exports": {
     "VisitCounter": {
+      "type": "durable-object",
+      "storage": "sqlite"
+    },
+    "VisitCounterV2": {
       "type": "durable-object",
       "storage": "sqlite"
     }
