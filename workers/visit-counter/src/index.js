@@ -5,6 +5,21 @@ const ALLOWED_ORIGINS = new Set([
   "https://slicemaster.com.cn"
 ]);
 
+// The page sends only one of these labels. No image, filename, crop data,
+// visitor identifier, or free-form metadata is accepted by this endpoint.
+const FUNNEL_EVENTS = new Set([
+  "upload_started",
+  "detection_completed",
+  "export_single_png",
+  "export_selected_pngs",
+  "download_contact_sheet",
+  "bookmark_opened",
+  "share_opened",
+  "share_completed",
+  "site_link_copied",
+  "site_link_copy_requested"
+]);
+
 function corsHeaders(request) {
   const origin = request.headers.get("Origin");
   if (!ALLOWED_ORIGINS.has(origin)) return null;
@@ -102,6 +117,40 @@ export default {
     }
 
     if (!cors) return new Response("Forbidden", { status: 403 });
+
+    if (request.method === "POST" && url.pathname === "/v1/event") {
+      let event;
+      try {
+        ({ event } = await request.json());
+      } catch {
+        return json(request, { error: "Invalid event payload" }, 400);
+      }
+
+      if (!FUNNEL_EVENTS.has(event)) {
+        return json(request, { error: "Unsupported event" }, 400);
+      }
+
+      try {
+        // Analytics Engine supplies the timestamp. The fixed index makes this
+        // dataset safe to aggregate without retaining a visitor identifier.
+        env.FUNNEL.writeDataPoint({
+          blobs: [event],
+          doubles: [1],
+          indexes: ["slice-master"]
+        });
+      } catch (error) {
+        console.error(JSON.stringify({ event: "funnel_write_failed", message: String(error) }));
+        return json(request, { error: "Analytics temporarily unavailable" }, 503);
+      }
+
+      return new Response(null, {
+        status: 204,
+        headers: {
+          ...cors,
+          "Cache-Control": "no-store"
+        }
+      });
+    }
 
     const counter = env.VISIT_COUNTER_V2.getByName("slice-master-site");
 

@@ -7,6 +7,12 @@
   "vars": {
     "HISTORICAL_BASELINE": "220"
   },
+  "analytics_engine_datasets": [
+    {
+      "binding": "FUNNEL",
+      "dataset": "slice_master_funnel"
+    }
+  ],
   "durable_objects": {
     "bindings": [
       {

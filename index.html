@@ -123,6 +123,33 @@
     function blobFor(b){let c=document.createElement('canvas');c.width=b.w;c.height=b.h;c.getContext('2d').drawImage(canvas,b.x,b.y,b.w,b.h,0,0,b.w,b.h);return new Promise(ok=>c.toBlob(ok,'image/png'))}function download(blob,name){let a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(a.href),800)}$('#downloadSheet').onclick=async()=>{let list=boxes,blobs=await Promise.all(list.map(blobFor)),cols=Math.min(5,list.length),cell=120,rows=Math.ceil(list.length/cols),c=document.createElement('canvas');c.width=cols*cell;c.height=rows*cell;let x=c.getContext('2d');x.fillStyle='#fff';x.fillRect(0,0,c.width,c.height);for(let i=0;i<blobs.length;i++){let im=await createImageBitmap(blobs[i]),s=Math.min(88/im.width,88/im.height),px=(i%cols)*cell+(cell-im.width*s)/2,py=((i/cols)|0)*cell+(cell-im.height*s)/2;x.drawImage(im,px,py,im.width*s,im.height*s);x.fillStyle='#66756d';x.font='11px sans-serif';x.fillText('icon-'+String(i+1).padStart(2,'0'),(i%cols)*cell+10,((i/cols)|0)*cell+110)}c.toBlob(b=>download(b,fileStem+'-contact-sheet.png'),'image/png')};const crc32=a=>{let c=~0;for(let b of a){c^=b;for(let k=0;k<8;k++)c=(c>>>1)^((c&1)?0xedb88320:0)}return(~c)>>>0},u16=n=>[n&255,n>>>8&255],u32=n=>[n&255,n>>>8&255,n>>>16&255,n>>>24&255],enc=s=>[...new TextEncoder().encode(s)];$('#downloadZip').onclick=async()=>{let indexes=[...selected].sort((a,b)=>a-b),parts=[],central=[],offset=0;for(let order=0;order<indexes.length;order++){let bytes=new Uint8Array(await(await blobFor(boxes[indexes[order]])).arrayBuffer()),name='icon_'+String(indexes[order]+1).padStart(2,'0')+'.png',nb=enc(name),crc=crc32(bytes),local=[80,75,3,4,20,0,0,0,0,0,0,0,0,0,...u32(crc),...u32(bytes.length),...u32(bytes.length),...u16(nb.length),0,...nb,...bytes];parts.push(...local);central.push(80,75,1,2,20,0,20,0,0,0,0,0,0,0,...u32(crc),...u32(bytes.length),...u32(bytes.length),...u16(nb.length),0,0,0,0,0,0,0,...u32(offset),...nb);offset+=local.length}let start=offset,all=new Uint8Array([...parts,...central,80,75,5,6,0,0,0,0,...u16(indexes.length),...u16(indexes.length),...u32(central.length),...u32(start),0,0]);download(new Blob([all],{type:'application/zip'}),fileStem+'-selected-icons.zip')};translate();
   })();
   </script>
+  <script>
+  /* Anonymous conversion telemetry: event labels only; UI images never leave this browser. */
+  (()=>{
+    const endpoint='https://slice-master-visit-counter.slicemaster-tools.workers.dev/v1/event';
+    window.sliceMasterTrack=event=>{try{fetch(endpoint,{method:'POST',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify({event}),keepalive:true}).catch(()=>{})}catch{}};
+    const trackUpload=file=>{
+      if(!file?.type?.startsWith('image/'))return;
+      window.sliceMasterTrack('upload_started');
+      const expectedName=file.name,expires=Date.now()+10000;
+      const waitForRecognition=()=>{
+        const name=document.querySelector('#fileName')?.textContent;
+        const source=document.querySelector('#sourceCanvas');
+        if(name===expectedName&&source?.width&&source?.height){window.sliceMasterTrack('detection_completed');return}
+        if(Date.now()<expires)setTimeout(waitForRecognition,40);
+      };
+      setTimeout(waitForRecognition,0);
+    };
+    document.addEventListener('change',event=>{if(event.target?.id==='fileInput')trackUpload(event.target.files?.[0])},true);
+    document.addEventListener('drop',event=>trackUpload(event.dataTransfer?.files?.[0]),true);
+    document.addEventListener('click',event=>{
+      const target=event.target.closest?.('#downloadZip,#downloadSheet,.slice-download-one,#bookmarkTrigger,#shareTrigger,#copySiteLink');
+      if(!target||target.disabled)return;
+      const eventName=target.matches('#downloadZip')?'export_selected_pngs':target.matches('#downloadSheet')?'download_contact_sheet':target.matches('.slice-download-one')?'export_single_png':target.matches('#bookmarkTrigger')?'bookmark_opened':target.matches('#shareTrigger')?'share_opened':'site_link_copy_requested';
+      window.sliceMasterTrack(eventName);
+    },true);
+  })();
+  </script>
   <style>
     /* Export controls added after the original card renderer runs. */
     .slice-download-one{position:absolute;left:7px;top:7px;width:25px;height:25px;border:1px solid rgba(20,33,29,.14);border-radius:7px;background:rgba(255,255,255,.94);color:var(--ink);display:grid;place-items:center;z-index:2;cursor:pointer;box-shadow:0 2px 5px rgba(20,33,29,.08)}
