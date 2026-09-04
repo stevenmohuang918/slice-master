@@ -29,6 +29,17 @@ function json(request, body, status = 200) {
   });
 }
 
+function chinaDayKey() {
+  const parts = new Intl.DateTimeFormat("en-US", {
+    timeZone: "Asia/Shanghai",
+    year: "numeric",
+    month: "2-digit",
+    day: "2-digit"
+  }).formatToParts(new Date());
+  const value = Object.fromEntries(parts.filter(({ type }) => type !== "literal").map(({ type, value }) => [type, value]));
+  return `${value.year}-${value.month}-${value.day}`;
+}
+
 export class VisitCounter extends DurableObject {
   constructor(ctx, env) {
     super(ctx, env);
@@ -39,17 +50,34 @@ export class VisitCounter extends DurableObject {
   }
 
   recordVisit() {
+    const day = `day:${chinaDayKey()}`;
     this.ctx.storage.sql.exec(
       "INSERT INTO counters (name, total) VALUES ('site', 1) ON CONFLICT(name) DO UPDATE SET total = total + 1"
     );
-    return this.total();
+    this.ctx.storage.sql.exec(
+      "INSERT INTO counters (name, total) VALUES (?, 1) ON CONFLICT(name) DO UPDATE SET total = total + 1",
+      day
+    );
+    return this.metrics();
+  }
+
+  value(name) {
+    const row = this.ctx.storage.sql
+      .exec("SELECT total FROM counters WHERE name = ?", name)
+      .toArray()[0];
+    return row?.total ?? 0;
   }
 
   total() {
-    const row = this.ctx.storage.sql
-      .exec("SELECT total FROM counters WHERE name = 'site'")
-      .toArray()[0];
-    return row?.total ?? 0;
+    return this.value("site");
+  }
+
+  today() {
+    return this.value(`day:${chinaDayKey()}`);
+  }
+
+  metrics() {
+    return { total: this.total(), today: this.today() };
   }
 }
 
@@ -78,11 +106,11 @@ export default {
     const counter = env.VISIT_COUNTER_V2.getByName("slice-master-site");
 
     if (request.method === "POST" && url.pathname === "/v1/visit") {
-      return json(request, { total: await counter.recordVisit() });
+      return json(request, await counter.recordVisit());
     }
 
     if (request.method === "GET" && url.pathname === "/v1/total") {
-      return json(request, { total: await counter.total() });
+      return json(request, await counter.metrics());
     }
 
     return json(request, { error: "Not found" }, 404);
