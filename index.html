@@ -370,9 +370,11 @@
     const count=document.querySelector('#siteVisitsCount');
     const todayCount=document.querySelector('#siteVisitsToday');
     if(!container||!count||!todayCount)return;
-    const now=new Date();
-    const dayKey=`${now.getFullYear()}-${String(now.getMonth()+1).padStart(2,'0')}-${String(now.getDate()).padStart(2,'0')}`;
-    const key='slice-master-visit-day';
+    const dateParts=Object.fromEntries(new Intl.DateTimeFormat('en-US',{timeZone:'Asia/Shanghai',year:'numeric',month:'2-digit',day:'2-digit'}).formatToParts(new Date()).filter(({type})=>type!=='literal').map(({type,value})=>[type,value]));
+    const dayKey=`${dateParts.year}-${dateParts.month}-${dateParts.day}`;
+    // Versioned key prevents the prior counter release from suppressing the
+    // first same-day count after daily metrics were introduced.
+    const key='slice-master-visit-day-v2';
     let shouldCount=true;
     try{shouldCount=localStorage.getItem(key)!==dayKey}catch{}
     const path=shouldCount?'/v1/visit':'/v1/total';
