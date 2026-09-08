@@ -363,6 +363,19 @@
   })();
   </script>
   <script>
+  /* Keep the metrics visible while a cold Worker wakes up. */
+  (()=>{
+    const container=document.querySelector('#siteVisits');
+    const count=document.querySelector('#siteVisitsCount');
+    const today=document.querySelector('#siteVisitsToday');
+    if(!container||!count||!today)return;
+    container.hidden=false;
+    container.setAttribute('aria-busy','true');
+    count.textContent='…';
+    today.textContent='…';
+  })();
+  </script>
+  <script>
   /* Public total only: uploaded images and slice data never leave this browser. */
   (()=>{
     const endpoint='https://slice-master-visit-counter.slicemaster-tools.workers.dev';
@@ -385,7 +398,8 @@
       count.textContent=String(total);
       todayCount.textContent=String(today);
       container.hidden=false;
-    }).catch(()=>{});
+      container.setAttribute('aria-busy','false');
+    }).catch(()=>{count.textContent='—';todayCount.textContent='—';container.hidden=false;container.setAttribute('aria-busy','false')});
   })();
   </script>
   <!-- Cloudflare Web Analytics -->
