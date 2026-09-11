@@ -20,6 +20,15 @@ const FUNNEL_EVENTS = new Set([
   "site_link_copy_requested"
 ]);
 
+// Article views are keyed by a small allow-list rather than arbitrary URL
+// input, so the public counter cannot be used as an unbounded key/value store.
+const ARTICLE_SLUGS = new Set([
+  "how-to-extract-icons",
+  "design-handoff-assets",
+  "png-svg-webp",
+  "ui-screenshot-to-assets"
+]);
+
 function corsHeaders(request) {
   const origin = request.headers.get("Origin");
   if (!ALLOWED_ORIGINS.has(origin)) return null;
@@ -74,6 +83,19 @@ export class VisitCounter extends DurableObject {
       day
     );
     return this.metrics();
+  }
+
+  recordArticleView(slug) {
+    const name = `article:${slug}`;
+    this.ctx.storage.sql.exec(
+      "INSERT INTO counters (name, total) VALUES (?, 1) ON CONFLICT(name) DO UPDATE SET total = total + 1",
+      name
+    );
+    return { slug, total: this.value(name) };
+  }
+
+  articleViews(slug) {
+    return { slug, total: this.value(`article:${slug}`) };
   }
 
   value(name) {
@@ -156,6 +178,31 @@ export default {
 
     if (request.method === "POST" && url.pathname === "/v1/visit") {
       return json(request, await counter.recordVisit());
+    }
+
+    if (request.method === "POST" && url.pathname === "/v1/article-view") {
+      let payload;
+      try {
+        payload = await request.json();
+      } catch {
+        return json(request, { error: "Invalid article payload" }, 400);
+      }
+
+      const slug = typeof payload?.slug === "string" ? payload.slug : "";
+      if (!ARTICLE_SLUGS.has(slug)) {
+        return json(request, { error: "Unsupported article" }, 400);
+      }
+
+      return json(request, await counter.recordArticleView(slug));
+    }
+
+    if (request.method === "GET" && url.pathname === "/v1/article-views") {
+      const slug = url.searchParams.get("slug") ?? "";
+      if (!ARTICLE_SLUGS.has(slug)) {
+        return json(request, { error: "Unsupported article" }, 400);
+      }
+
+      return json(request, await counter.articleViews(slug));
     }
 
     if (request.method === "GET" && url.pathname === "/v1/total") {

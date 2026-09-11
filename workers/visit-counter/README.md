@@ -4,6 +4,8 @@ Cloudflare Worker plus a SQLite-backed Durable Object used by the public Slice M
 
 - `POST /v1/visit` increments the anonymous total and the current China (UTC+8) calendar day's count.
 - `GET /v1/total` returns `{ total, today }`.
+- `POST /v1/article-view` increments one of the four allow-listed article slugs.
+- `GET /v1/article-views?slug=<slug>` returns the aggregate view count for that article. Chinese and English mirrors share one count per topic.
 - `POST /v1/event` accepts only a fixed, anonymous conversion event label. It never accepts images, file names, crop coordinates, visitor IDs, or free-form metadata. The aggregate is written to the Cloudflare Analytics Engine dataset `slice_master_funnel`.
 - Requests are CORS-restricted to the public Slice Master origins.
 - The browser deduplicates its own increment to once per calendar day. This is a public visit counter, not an identity or analytics system.
