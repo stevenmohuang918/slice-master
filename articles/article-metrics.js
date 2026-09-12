@@ -2,20 +2,20 @@
 (() => {
   const covers = {
     "how-to-extract-icons": {
-      zh: ["marketing-review-flow.png", "如何从 UI 截图中提取图标的营销封面", "从“素材没有源文件”到“只交付真正需要的 PNG”，先把问题讲清楚，再开始切图。"],
-      en: ["marketing-english-card.png", "Cover for extracting icons from a UI screenshot", "From screenshot to reusable UI assets: upload, review, and export only what the handoff needs."]
+      zh: ["article-cover-extract-icons-v2.png", "如何从 UI 截图中提取图标的文章封面", "把截图里的候选图标逐个识别、校对，再整理成可交付的透明 PNG。"],
+      en: ["article-cover-extract-icons-v2.png", "Cover for extracting icons from a UI screenshot", "Identify, review, and turn screenshot icons into clean, reusable PNG assets."]
     },
     "design-handoff-assets": {
-      zh: ["marketing-handoff-context.png", "设计稿交付前资产判断的营销封面", "设计交付不只是“切图”，而是把固定视觉、可变内容和使用规则交给正确的人。"],
-      en: ["marketing-abstract-asset.png", "Cover for choosing design handoff assets", "A clearer handoff starts with the screenshot, then turns useful visual clues into documented assets."]
+      zh: ["article-cover-handoff-assets-v2.png", "设计稿交付前资产判断的文章封面", "先判断哪些视觉元素应该导出，再把真正需要的素材交给开发。"],
+      en: ["article-cover-handoff-assets-v2.png", "Cover for choosing design handoff assets", "Decide which visual elements belong in the asset handoff before development starts."]
     },
     "png-svg-webp": {
-      zh: ["marketing-format-compare.png", "PNG SVG WebP 资源格式选择的营销封面", "少一点机械裁剪，多一点基于真实视觉、尺寸和交付场景的判断。"],
-      en: ["marketing-format-compare.png", "Cover for the PNG SVG WebP format guide", "Choose a format after checking the visual, the target size, and the delivery context."]
+      zh: ["article-cover-format-guide-v2.png", "PNG SVG WebP 资源格式选择的文章封面", "从缩放、清晰度、透明效果和体积出发，选对最适合的资源格式。"],
+      en: ["article-cover-format-guide-v2.png", "Cover for the PNG SVG WebP format guide", "Compare sharpness, transparency, scaling, and file size before choosing a format."]
     },
     "ui-screenshot-to-assets": {
-      zh: ["marketing-abstract-asset.png", "从设计截图到可用 UI 资产的营销封面", "从一张完整界面图开始，把零散的视觉线索整理成可查、可用、可交付的资产。"],
-      en: ["marketing-handoff-context.png", "Cover for turning a screenshot into usable assets", "Turn a complete interface screenshot into a reviewable, reusable asset inventory."]
+      zh: ["article-cover-workflow-v2.png", "从设计截图到可用 UI 资产的文章封面", "从完整界面、选区校对到资产归档，一张截图也能变成清晰的交付流程。"],
+      en: ["article-cover-workflow-v2.png", "Cover for turning a screenshot into usable assets", "Follow the journey from a complete screenshot to reviewed, reusable assets."]
     }
   };
   const pathParts = window.location.pathname.split("/").filter(Boolean);
@@ -26,6 +26,14 @@
   const meta = article?.querySelector(".meta");
   const locale = document.documentElement.lang === "en" ? "en" : "zh";
   const cover = slug ? covers[slug]?.[locale] : null;
+  document.querySelectorAll("[data-article-views]").forEach((metric) => {
+    const card = metric.closest(".post");
+    const cardCover = covers[metric.dataset.articleViews]?.[locale];
+    const image = card?.querySelector(".post-cover img");
+    if (!image || !cardCover) return;
+    image.src = `/assets/${cardCover[0]}`;
+    image.alt = cardCover[1];
+  });
   if (article && h1 && meta && cover) {
     if (!article.querySelector(".article-cover")) {
       const figure = document.createElement("figure");
